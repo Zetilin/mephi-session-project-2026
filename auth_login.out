@@ -1,0 +1,15 @@
+$ grep -n -A1 pam_access /etc/pam.d/login
+4:account    required     pam_access.so
+5-account    required     pam_nologin.so
+
+$ grep -v "^#" /etc/security/access.conf | grep .
+-:(curators):LOCAL
+
+$ sudo journalctl -b | grep -iE "pam_access|login\[" | tail -20
+ноя 12 22:36:28 mephi-2026.domain.local audit[1854]: ANOM_LOGIN_LOCATION pid=1854 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:local_login_t:s0-s0:c0.c1023 msg='op=PAM:pam_access acct="curator1" exe="/usr/bin/login" hostname=mephi-2026.domain.local addr=? terminal=/dev/tty3 res=success'
+ноя 12 22:36:28 mephi-2026.domain.local login[1854]: pam_access(login:account): access denied for user `curator1' from `tty3'
+ноя 12 22:36:28 mephi-2026.domain.local login[1854]: Permission denied
+ноя 12 22:36:41 mephi-2026.domain.local audit[1861]: USER_ACCT pid=1861 uid=0 auid=4294967295 ses=4294967295 subj=system_u:system_r:local_login_t:s0-s0:c0.c1023 msg='op=PAM:accounting grantors=pam_access,pam_unix acct="user1" exe="/usr/bin/login" hostname=mephi-2026.domain.local addr=? terminal=/dev/tty3 res=success'
+ноя 12 22:36:41 mephi-2026.domain.local login[1861]: pam_unix(login:session): session opened for user user1(uid=5501) by user1(uid=0)
+ноя 12 22:36:41 mephi-2026.domain.local login[1861]: LOGIN ON tty3 BY user1
+

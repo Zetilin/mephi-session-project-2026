@@ -1,0 +1,48 @@
+$ systemctl get-default
+graphical.target
+
+$ hostnamectl --static
+mephi-2026.domain.local
+
+$ ip -4 a show ens33
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    altname enp2s1
+    inet 192.168.217.131/24 brd 192.168.217.255 scope global dynamic noprefixroute ens33
+       valid_lft 1608sec preferred_lft 1608sec
+
+$ findmnt /mephi-web
+TARGET     SOURCE    FSTYPE OPTIONS
+/mephi-web /dev/sdb1 ext4   rw,relatime,seclabel
+
+$ systemctl is-enabled nginx; systemctl is-active nginx
+enabled
+active
+
+$ getenforce
+Enforcing
+
+$ getcap /usr/sbin/tcpdump
+/usr/sbin/tcpdump cap_net_admin,cap_net_raw=ep
+
+$ sudo getfacl /data/mephi-2026
+getfacl: Removing leading '/' from absolute path names
+# file: data/mephi-2026
+# owner: root
+# group: developers
+# flags: -s-
+user::rwx
+group::rwx
+group:curators:r-x
+mask::rwx
+other::---
+default:user::rwx
+default:group::rwx
+default:group:developers:rwx
+default:group:curators:r-x
+default:mask::rwx
+default:other::---
+
+
+$ curl -s http://localhost/
+Hello from Student: M265309
+

@@ -58,3 +58,11 @@ mask::rw-
 other::---
 
 
+$ sudo -u curator1 rm -f /data/mephi-2026/file2
+rm: невозможно удалить '/data/mephi-2026/file2': Отказано в доступе
+
+$ sudo ls -l /data/mephi-2026
+итого 16
+-rw-rw----+ 1 user1 developers 10 ноя 12 21:45 file1
+-rw-rw----+ 1 user1 developers 33 ноя 12 22:01 file2
+

@@ -1,5 +1,5 @@
 $ ls -l /tmp/tcpdump-*.rpm
-ls: невозможно получить доступ к '/tmp/tcpdump-*.rpm': Нет такого файла или каталога
+-rw-r--r--. 1 ztl ztl 535524 ноя 12 22:29 /tmp/tcpdump-4.99.5-1.red80.x86_64.rpm
 
 $ rpm -q --last tcpdump
 tcpdump-4.99.5-1.red80.x86_64                 Чт 12 ноя 2026 21:21:40
