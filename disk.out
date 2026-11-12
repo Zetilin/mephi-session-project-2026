@@ -1,0 +1,15 @@
+$ lsblk -f /dev/sdb
+NAME   FSTYPE FSVER LABEL     UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sdb                                                                               
+└─sdb1 ext4   1.0   MEPHI_WEB 7a30bfc7-a91e-4135-8eb4-5a6cd788044c    4,6G     0% /mephi-web
+
+$ sudo blkid /dev/sdb1
+/dev/sdb1: LABEL="MEPHI_WEB" UUID="7a30bfc7-a91e-4135-8eb4-5a6cd788044c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="225720c0-1b56-7942-aa3f-583e3d588c6b"
+
+$ grep MEPHI_WEB /etc/fstab
+LABEL=MEPHI_WEB  /mephi-web  ext4  defaults  0 2
+
+$ findmnt /mephi-web
+TARGET     SOURCE    FSTYPE OPTIONS
+/mephi-web /dev/sdb1 ext4   rw,relatime,seclabel
+

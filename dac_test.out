@@ -1,0 +1,60 @@
+$ sudo ls -la /data/mephi-2026
+итого 20
+drwxrws---+ 2 root  developers 4096 ноя 12 21:45 .
+drwxr-xr-x. 3 root  root       4096 ноя 12 21:44 ..
+-rw-rw----+ 1 user1 developers   10 ноя 12 21:45 file1
+
+$ sudo getfacl /data/mephi-2026
+getfacl: Removing leading '/' from absolute path names
+# file: data/mephi-2026
+# owner: root
+# group: developers
+# flags: -s-
+user::rwx
+group::rwx
+group:curators:r-x
+mask::rwx
+other::---
+default:user::rwx
+default:group::rwx
+default:group:developers:rwx
+default:group:curators:r-x
+default:mask::rwx
+default:other::---
+
+
+$ sudo -u user1 sh -c "echo from_user1 > /data/mephi-2026/file2"
+
+$ sudo -u user2 sh -c "echo from_user2 >> /data/mephi-2026/file2"
+
+$ sudo -u user3 sh -c "echo from_user3 >> /data/mephi-2026/file2"
+
+$ sudo -u curator1 cat /data/mephi-2026/file2
+from_user1
+from_user2
+from_user3
+
+$ sudo -u curator2 sh -c "echo hack >> /data/mephi-2026/file2"
+sh: строка 1: /data/mephi-2026/file2: Отказано в доступе
+
+$ sudo -u curator1 rm /data/mephi-2026/file2
+rm: удалить защищённый от записи обычный файл '/data/mephi-2026/file2'? 
+$ ls /data/mephi-2026
+ls: невозможно открыть каталог '/data/mephi-2026': Отказано в доступе
+
+$ cat /data/mephi-2026/file2
+cat: /data/mephi-2026/file2: Отказано в доступе
+
+$ sudo getfacl /data/mephi-2026/file2
+getfacl: Removing leading '/' from absolute path names
+# file: data/mephi-2026/file2
+# owner: user1
+# group: developers
+user::rw-
+group::rwx	#effective:rw-
+group:developers:rwx	#effective:rw-
+group:curators:r-x	#effective:r--
+mask::rw-
+other::---
+
+

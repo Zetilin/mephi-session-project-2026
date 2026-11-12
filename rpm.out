@@ -1,0 +1,16 @@
+$ ls -l /tmp/tcpdump-*.rpm
+ls: невозможно получить доступ к '/tmp/tcpdump-*.rpm': Нет такого файла или каталога
+
+$ rpm -q --last tcpdump
+tcpdump-4.99.5-1.red80.x86_64                 Чт 12 ноя 2026 21:21:40
+
+$ rpm -qi tcpdump | grep -E "Name|Version|Install Date"
+Name        : tcpdump
+Version     : 4.99.5
+Install Date: Чт 12 ноя 2026 21:21:40
+
+$ rpm -q nginx libcap-ng-utils tcpdump
+nginx-1.30.4-2.red80.x86_64
+libcap-ng-utils-0.8.3-3.red80.x86_64
+tcpdump-4.99.5-1.red80.x86_64
+

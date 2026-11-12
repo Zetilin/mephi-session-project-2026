@@ -1,0 +1,27 @@
+$ grep ^PASS_MAX_DAYS /etc/login.defs
+PASS_MAX_DAYS	90
+
+$ grep ^minlen /etc/security/pwquality.conf
+minlen = 12
+
+$ for u in ztl user1 user2 user3 curator1 curator2; do echo "== $u"; sudo LC_ALL=C chage -l $u | grep -i maximum; done
+== ztl
+Maximum number of days between password change		: 90
+== user1
+Maximum number of days between password change		: 90
+== user2
+Maximum number of days between password change		: 90
+== user3
+Maximum number of days between password change		: 90
+== curator1
+Maximum number of days between password change		: 90
+== curator2
+Maximum number of days between password change		: 90
+
+$ echo "Short1pass!" | pwscore
+Проверка сложности пароля завершилась неудачей:
+ Пароль должен содержать не менее 12 символов
+
+$ echo "LongEnough#Pass2026" | pwscore
+100
+

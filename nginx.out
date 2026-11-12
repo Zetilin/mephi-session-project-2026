@@ -1,0 +1,35 @@
+$ systemctl is-enabled nginx
+enabled
+
+$ systemctl is-active nginx
+active
+
+$ systemctl status nginx --no-pager
+● nginx.service - The nginx HTTP and reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: disabled)
+    Drop-In: /usr/lib/systemd/system/service.d
+             └─10-timeout-abort.conf
+     Active: active (running) since Thu 2026-11-12 21:50:00 MSK; 11min ago
+    Process: 2638 ExecStartPre=/usr/bin/rm -f /run/nginx.pid (code=exited, status=0/SUCCESS)
+    Process: 2639 ExecStartPre=/usr/sbin/nginx -t (code=exited, status=0/SUCCESS)
+    Process: 2640 ExecStart=/usr/sbin/nginx (code=exited, status=0/SUCCESS)
+   Main PID: 2641 (nginx)
+      Tasks: 5 (limit: 4610)
+     Memory: 5.4M
+        CPU: 68ms
+     CGroup: /system.slice/nginx.service
+             ├─2641 "nginx: master process /usr/sbin/nginx"
+             ├─2642 "nginx: worker process"
+             ├─2643 "nginx: worker process"
+             ├─2644 "nginx: worker process"
+             └─2645 "nginx: worker process"
+
+ноя 12 21:50:00 mephi-2026.domain.local systemd[1]: Starting nginx.service - The nginx HTTP and reverse proxy server...
+ноя 12 21:50:00 mephi-2026.domain.local nginx[2639]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+ноя 12 21:50:00 mephi-2026.domain.local nginx[2639]: nginx: configuration file /etc/nginx/nginx.conf test is successful
+ноя 12 21:50:00 mephi-2026.domain.local systemd[1]: Started nginx.service - The nginx HTTP and reverse proxy server.
+
+$ grep -n "root " /etc/nginx/nginx.conf
+41:        root         /mephi-web;
+54:#        root         /mephi-web;
+

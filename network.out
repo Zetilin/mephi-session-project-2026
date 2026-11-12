@@ -1,0 +1,31 @@
+$ hostnamectl
+ Static hostname: mephi-2026.domain.local
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: a736a551e2d14129a6fe85d7b9a0eef9
+         Boot ID: 1ea9275028934472b78833ac5ff655c5
+  Virtualization: vmware
+Operating System: RED OS 8.0.3 (Standard Desktop)
+     CPE OS Name: cpe:/o:redos:redos:8
+          Kernel: Linux 6.12.113-1.red80.x86_64
+    Architecture: x86-64
+ Hardware Vendor: VMware, Inc.
+  Hardware Model: VMware Virtual Platform
+Firmware Version: 6.00
+   Firmware Date: Thu 2020-11-12
+
+$ nmcli -f NAME,DEVICE,TYPE connection show --active
+NAME   DEVICE  TYPE     
+ens33  ens33   ethernet 
+lo     lo      loopback 
+
+$ nmcli -g ipv4.method,connection.autoconnect connection show ens33
+auto
+yes
+
+$ ip -4 a show ens33
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    altname enp2s1
+    inet 192.168.217.131/24 brd 192.168.217.255 scope global dynamic noprefixroute ens33
+       valid_lft 1365sec preferred_lft 1365sec
+

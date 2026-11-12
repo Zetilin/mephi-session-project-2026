@@ -1,0 +1,30 @@
+$ ls -l /usr/sbin/tcpdump
+-rwxr-xr-x. 1 root root 1299064 июл 30  2025 /usr/sbin/tcpdump
+
+$ sudo setcap -r /usr/sbin/tcpdump
+
+$ sudo -u user1 tcpdump -c 1 -i any
+tcpdump: any: You don't have permission to capture on that device
+(socket: Operation not permitted)
+
+$ sudo setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+
+$ getcap /usr/sbin/tcpdump
+/usr/sbin/tcpdump cap_net_admin,cap_net_raw=ep
+
+$ filecap /usr/sbin/tcpdump
+set       file                 capabilities  rootid
+effective /usr/sbin/tcpdump    net_admin, net_raw
+
+$ sudo -u user1 tcpdump -c 5 -i any
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+22:02:28.899767 ens33 In  IP 192.168.217.1.61192 > mephi-2026.domain.local.ssh: Flags [P.], seq 345092073:345092109, ack 326484150, win 255, length 36
+22:02:28.899851 ens33 Out IP mephi-2026.domain.local.ssh > 192.168.217.1.61192: Flags [P.], seq 1:37, ack 36, win 2247, length 36
+22:02:28.930586 ens33 In  IP 192.168.217.1.61192 > mephi-2026.domain.local.ssh: Flags [P.], seq 36:72, ack 37, win 255, length 36
+22:02:28.930653 ens33 Out IP mephi-2026.domain.local.ssh > 192.168.217.1.61192: Flags [P.], seq 37:73, ack 72, win 2247, length 36
+22:02:28.962426 ens33 In  IP 192.168.217.1.61192 > mephi-2026.domain.local.ssh: Flags [P.], seq 72:108, ack 73, win 255, length 36
+5 packets captured
+67 packets received by filter
+0 packets dropped by kernel
+
